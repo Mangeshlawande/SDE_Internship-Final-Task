@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Blog OR Tweets
+
+{% endblock  %}
+
+
+{% block content %}
+<h1> Welcome to Tweet's Blog Application
+</h1>
+
+<a class="btn btn-outline-primary mb-4" href="{% url 'tweet_create' %}">Create a Tweet </a>
+<div class="container row gap-3">
+    {% for tweet in tweets %}
+    <div class="card" style="width: 18rem;">
+        <img src="{{tweet.photo.url}}" class="card-img-top mt-3" alt="...">
+        <div class="card-body ">
+          <h5 class="card-title">{{tweet.user.username}}</h5>
+          <p class="card-text">{{tweet.text}}</p>
+          {% if tweet.user == user  %}
+          <div class="d-grid mx-auto gap-2">
+            <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-outline-success "> Edit </a>
+          <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-outline-danger "> Delete </a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+    
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+

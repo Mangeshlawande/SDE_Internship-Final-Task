@@ -1,0 +1,45 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+    Blog OR Tweets
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Welcome to Tweet's Blog Application</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title">
+                {% if form.instance.pk %}
+                    Edit Tweet
+                {% else %}
+                    Create Tweet
+                {% endif %}
+            </h2>
+
+            <form action="" method="post" enctype="multipart/form-data" class="form">
+                {% csrf_token %}
+
+                <!-- Bootstrap Styling for Form Fields -->
+                <div class="mb-3">
+                    {{ form.as_p }}
+                </div>
+
+                <button class="btn btn-outline-warning mb-2" type="submit">
+                    Submit
+                </button>
+            </form>
+
+            <a href="{% url 'tweet_list' %}" class="btn btn-outline-primary">
+                Back To Tweet List
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+

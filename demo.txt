@@ -1,0 +1,26 @@
+rest : representational state transfer 
+
+cmd to create venv
+    python3 -m venv .venv
+
+activate venv
+     source  .venv/bin/activate
+
+deactivate venv
+    deactivate
+
+install django
+    pip install django
+
+It collect the installed packages in txt file
+    pip freeze > requirements.txt
+
+start the project
+
+    django-admin startproject blogapp
+
+## username :: mangesh
+## admin1234
+
+
+configure templates 

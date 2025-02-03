@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Custom URL Shortener</title>
+
+	<link rel="stylesheet" href="{% static "bootstrap.min.css" %}" type="text/css" media="screen">
+	<link rel="stylesheet" href="{% static "style.css" %}" type="text/css" media="screen">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+</head>
+
+<body class="pace-done lout_stats30">
+	<main id="content" role="main" class="wyniki wyniki_all">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 page_log_in mt-0">
+					<h2 class="h1" style="text-align: center;">Link Analytics</h2>
+				</div>
+
+				<div class="url_options url_stats_o" id="1">
+					<p class="data_link">{{obj.date}}</p>
+					<p class="url_link">
+						{{obj.long_url}}
+					</p>
+					<p id="link" class="link_element">
+						<a href="{{obj.long_url}}" class="short_url_l" target="_blank">
+							{{obj.short_url}}</a>
+					</p>
+					<div class="stats_total btn-cutt click_stats btn_norm">
+						<div>Total clicks <strong class="allClicks">{{clicks}}</strong></div>
+					</div>
+				</div>
+			</div>
+			<br /><br />
+			<div class="row">
+                <div class="col-6">
+                    <h2 style="text-align: center; font-size: 25px; font-weight: 500;">Country Clicks</h2>
+                    <canvas id="barChart"></canvas>
+                </div>
+                <div class="col-6">
+                    <h2 style="text-align: center; font-size: 25px; font-weight: 500;">Device clicks</h2>
+                    <canvas id="donutChart"></canvas>
+                </div>
+            </div>
+		</div>
+	</main>
+
+</body>
+
+<script>
+    // Fix: Convert Django values to numbers using parseInt()
+    const desktop_count = parseInt("{{ desktop | safe }}") || 0;
+    const mobile_count = parseInt("{{ mobile | safe }}") || 0;
+
+    // Country Analytics Chart
+    const ctx = document.getElementById('barChart').getContext('2d');
+    const countries = JSON.parse('{{ countries | safe }}');
+    const number_of_clicks = JSON.parse('{{ clicks | safe }}');
+
+    const barChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: countries,
+            datasets: [{
+                label: 'Clicks',
+                data: number_of_clicks,
+                backgroundColor: '#FF6384',
+            }]
+        }
+    });
+
+    // Device Analytics Chart
+    const ctx2 = document.getElementById('donutChart').getContext('2d');
+    const donutChart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: ['Desktop', 'Mobile'],
+            datasets: [{
+                data: [desktop_count, mobile_count],
+                backgroundColor: ['rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
+                hoverOffset: 4
+            }]
+        }
+    });
+</script>
+
+
+</html>
