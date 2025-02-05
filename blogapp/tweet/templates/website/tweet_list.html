@@ -7,11 +7,11 @@
 
 
 {% block content %}
-<h1> Welcome to Tweet's Blog Application
+<h1 class='text-center mb-3'> Welcome to Tweet's Blog Application
 </h1>
 
-<a class="btn btn-outline-primary mb-4" href="{% url 'tweet_create' %}">Create a Tweet </a>
-<div class="container row gap-3">
+<a class=" container btn btn-outline-primary mb-4 " href="{% url 'tweet_create' %}">Create a Tweet </a>
+<div class="justify-content-center  row gap-3">
     {% for tweet in tweets %}
     <div class="card" style="width: 18rem;">
         <img src="{{tweet.photo.url}}" class="card-img-top mt-3" alt="...">

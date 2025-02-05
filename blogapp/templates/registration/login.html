@@ -1,5 +1,6 @@
 
 {% extends "layout.html" %}
+
 {% block content %}
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -14,23 +15,12 @@
                         Invalid username or password. Please try again.
                     </div>
                     {% endif %}
-                    <form method="post" novalidate>
+                    <form method="post">
                         {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="id_username" class="form-label">Username</label>
-                            <input type="text" name="username" id="id_username" class="form-control" placeholder="Enter your username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_password" class="form-label">Password</label>
-                            <input type="password" name="password" id="id_password" class="form-control" placeholder="Enter your password" required>
-                        </div>
-                        <div class="form-check mb-3">
-                            <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
-                            <label class="form-check-label" for="remember_me">Remember Me</label>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-outline-primary">Login</button>
-                        </div>
+                    
+                        {{form.as_p}}
+                        <button class="btn btn-primary" type="submit">Login </button>
+                        <a href="{% url 'tweet_list' %}" class="btn btn-success"> Home </a>
                     </form>
                 </div>
                 <div class="card-footer text-center">
@@ -42,3 +32,19 @@
 </div>
 {% endblock %}
 
+
+
+{% comment %} {% extends "layout.html" %}
+
+
+{% block content %}
+<h2>Login Form </h2>
+<form method="post">
+    {% csrf_token %}
+
+    {{form.as_p}}
+    <button class="btn btn-primary" type="submit">Login </button>
+</form>
+<p>Don't have an account ? <a href="{% url 'register' %}"> Register Here</a></p>
+
+{% endblock %} {% endcomment %}

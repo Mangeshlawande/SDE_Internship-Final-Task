@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import Tweet
 from .forms import TweetForm, UserRegistrationForm, TweetSearchForm
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate
+from django.contrib import messages
 # Create your views here.
 
 def index(request):
@@ -51,7 +52,10 @@ def tweet_delete(request, tweet_id):
         tweet.delete()
         return redirect("tweet_list")
     return render(request, 'website/tweet_conform_delete.html', { 'tweet' : tweet })
-
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import UserRegistrationForm  # Assuming you have this form defined
 
 def register(request):
     if request.method == 'POST':
@@ -61,14 +65,23 @@ def register(request):
             user.set_password(form.cleaned_data['password1'])
             user.save()
             login(request, user)
-            return redirect('tweet_list')
-
-
-      
+            print(f"User {user.username} logged in successfully")
+            # Debug the redirect process
+            if request.user.is_authenticated:
+                print(f"Redirecting {request.user.username} to tweet_list")
+            else:
+                print("Login failed, user not authenticated")
+            return redirect('tweet_list')  # Ensure this URL name matches your 'urls.py'
+        else:
+            print("Form is invalid")
+            print(form.errors)  # Print any form validation errors
+            messages.error(request, 'There were some errors in the form. Please correct them and try again.')
     else:
         form = UserRegistrationForm()
+        
 
-    return render(request, 'registration/register.html', { 'form' : form })
+    return render(request, 'registration/register.html', {'form': form})
+
 
 
 
